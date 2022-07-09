@@ -11,7 +11,7 @@ You start with 100 DVT tokens in balance.
 
 # Notes
 
->UnstoppableLender
+`UnstoppableLender.sol`
 
 - Contract using Solidity >0.8; so no underflow/overflow errors
 - Contract inherit from OpenZeppelin's ReentrancyGuard contract; so reentrancy not the problem
@@ -26,4 +26,4 @@ Attention is drawn to the `flashLoan` method
 5. `IRceiver(msg.sender).receiveTokens(address(dvt), borrowAmount)`; recieves the flashloan back from the user
 6. `require(balanceAfter >= balanceBefore)`; checks that the flashloan has been paid back
 
-Immediately obvious that if a user sends funds directly to the pool, rather than calling `depositTokens` then the state variable `poolBalance` will not be updated. This will cause 3. to fail above and thus stopping the pool from offering a flash loan.
+Immediately obvious that if a user sends funds directly to the pool, rather than calling `depositTokens` then the state variable `poolBalance` will not be updated. This will cause `point 3` above to fail above and thus stopping the pool from offering a flash loan.
