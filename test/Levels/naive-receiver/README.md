@@ -36,3 +36,5 @@ Moving to the borrowers contract `FlashLoanReceiver.sol`, zooming into the metho
 Notice that `FlashLoanReciever` does not check that `fee` passed in is correct. Rather than calling the getter it trusts whatever is passed in as the parameter. This is the exploit.
 
 Upon more thought, `NaiveReceiverLenderPool.sol` the method `flashLoan` does not check that `msg.sender` is actually the borrower. The exploit to drain the `borrower` is simply to call the flashloan method 10 times with the borrower address being that of the user we are trying to drain.
+
+Extra: Doing it in asingle transaction is a big plus !!!
